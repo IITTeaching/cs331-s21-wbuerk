@@ -31,16 +31,38 @@ ROMEO_SOLILOQUY = """
 ################################################################################
 # EXERCISE 1
 ################################################################################
+
+
 # Implement this function
+
+# WIP
+# Need to make print an array of tuples instead of just one tuple per key
 def compute_ngrams(toks, n=2):
     """Returns an n-gram dictionary based on the provided list of tokens."""
-    pass
+    words = toks
+    ngram_dict = {}
+
+    for idx, word in enumerate(words):
+
+        if(idx+n-1 < len(words)):
+            if word not in ngram_dict:
+                ngram_dict[word] = []
+
+            words_after = []
+            for x in range(n-1):
+                words_after += [words[idx+x+1]]
+
+            ngram_dict[word].append(tuple(words_after))
+    return ngram_dict
+
 
 def test1():
     test1_1()
     test1_2()
 
 # 20 Points
+
+
 def test1_1():
     """A smaller test case for your ngram function."""
     tc = TestCase()
@@ -56,7 +78,8 @@ def test1_1():
     romeo_toks = [t.lower() for t in ROMEO_SOLILOQUY.split()]
 
     dct = compute_ngrams(romeo_toks, n=4)
-    tc.assertEqual(dct['but'], [('sick', 'and', 'green'), ('fools', 'do', 'wear')])
+    tc.assertEqual(
+        dct['but'], [('sick', 'and', 'green'), ('fools', 'do', 'wear')])
     tc.assertEqual(dct['it'],
                    [('is', 'the', 'east,'),
                     ('off.', 'it', 'is'),
@@ -65,6 +88,8 @@ def test1_1():
                     ('were', 'not', 'night.')])
 
 # 30 Points
+
+
 def test1_2():
     """Test your code on Peter Pan."""
     PETER_PAN_URL = 'https://moss.cs.iit.edu/cs331/data/peterpan.txt'
@@ -92,10 +117,41 @@ def test1_2():
 # EXERCISE 2
 ################################################################################
 # Implement this function
-def gen_passage(ngram_dict, length=100):
-    pass
 
-# 50 Points
+
+def gen_passage(ngram_dict, length=100):
+    current_length = 0
+    passage = ""
+    current_key = random.choice(sorted(ngram_dict.keys()))
+
+    if current_length < length:
+        passage += current_key + " "
+        current_length += 1
+
+    while (current_length < length):
+        current_ngram = random.choice(ngram_dict[current_key])
+
+        for idx, word in enumerate(current_ngram):
+            if word in ngram_dict:
+                if current_length < length:
+                    passage += word + " "
+                    current_length += 1
+
+                if idx == len(current_ngram)-1:
+                    current_key = word
+            else:
+                passage += word + " "
+                current_length += 1
+                if current_length < length:
+                    current_key = random.choice(sorted(ngram_dict.keys()))
+                    passage += current_key + " "
+                    current_length += 1
+
+    return passage.rstrip()
+
+ # 50 Points
+
+
 def test2():
     """Test case for random passage generation."""
     tc = TestCase()
@@ -109,9 +165,11 @@ def test2():
     tc.assertEqual(gen_passage(compute_ngrams(romeo_toks), 10),
                    'too bold, \'tis not night. see, how she leans her')
 
+
 def main():
     test1()
     test2()
+
 
 if __name__ == '__main__':
     main()
