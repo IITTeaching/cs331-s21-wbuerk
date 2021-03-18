@@ -763,27 +763,6 @@ def test_reverse():
 
 
 def main():
-<<<<<<< HEAD
-    test_subscript_access()
-    say_success()
-    test_custor_based_access()
-    say_success()
-    test_stringification()
-    say_success()
-    test_single_element_manipulation()
-    say_success()
-    test_predicates()
-    say_success()
-    test_queries()
-    say_success()
-    test_bulk_operations()
-    say_success()
-    test_iteration()
-    say_success()
-    test_reverse()
-    say_success()
-
-=======
     for t in [test_subscript_access,
               test_custor_based_access,
               test_stringification,
@@ -793,9 +772,9 @@ def main():
               test_bulk_operations,
               test_iteration,
               test_reverse]:
-         t()
-         say_success()
->>>>>>> 25a44f481c392bb926ff6acb6619c9dde87e45ca
+        t()
+        say_success()
+
 
 if __name__ == '__main__':
     main()
