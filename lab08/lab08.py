@@ -5,10 +5,12 @@ import functools
 ################################################################################
 # 1. IMPLEMENT THIS HEAP
 ################################################################################
+
+
 class Heap:
-    def __init__(self, key=lambda x:x):
+    def __init__(self, key=lambda x: x):
         self.data = []
-        self.key  = key
+        self.key = key
 
     @staticmethod
     def _parent(idx):
@@ -22,13 +24,66 @@ class Heap:
     def _right(idx):
         return idx*2+2
 
+    def pos_exists(self, n):
+        return n < len(self)
+
+    def switch_node(self, parent, child):
+        parentval = self.data[parent]
+        childval = self.data[child]
+        self.data[parent] = childval
+        self.data[child] = parentval
+
     def heapify(self, idx=0):
-        ### BEGIN SOLUTION
-        ### END SOLUTION
+        # BEGIN SOLUTION
+        lc = Heap._left(idx)
+        rc = Heap._right(idx)
+        if len(self.data) != 0:
+            curval = self.key(self.data[idx])
+
+            if self.pos_exists(lc):
+                if self.pos_exists(rc):
+                    lcval = self.key(self.data[lc])
+                    rcval = self.key(self.data[rc])
+
+                    if lcval > curval or rcval > curval:
+                        if lcval > rcval:
+
+                            self.switch_node(idx, lc)
+                            self.heapify(lc)
+                        else:
+
+                            self.switch_node(idx, rc)
+                            self.heapify(rc)
+                else:
+                    lcval = self.key(self.data[lc])
+
+                    if lcval > curval:
+
+                        self.switch_node(idx, lc)
+                        self.heapify(lc)
+            elif self.pos_exists(rc):
+                rcval = self.key(self.data[rc])
+
+                if rcval > curval:
+
+                    self.switch_node(idx, rc)
+                    self.heapify(rc)
+        # END SOLUTION
+
+    def trickle_up(self, idx):
+        if idx > 0:
+            p = Heap._parent(idx)
+            pval = self.data[p]
+            curval = self.data[idx]
+            if self.key(pval) < self.key(curval):
+                self.switch_node(p, idx)
+                self.trickle_up(p)
 
     def add(self, x):
-        ### BEGIN SOLUTION
-        ### END SOLUTION
+        # BEGIN SOLUTION
+        self.data.append(x)
+        self.trickle_up(len(self.data)-1)
+        # END SOLUTION
 
     def peek(self):
         return self.data[0]
@@ -57,6 +112,8 @@ class Heap:
 ################################################################################
 
 # (6 point)
+
+
 def test_key_heap_1():
     from unittest import TestCase
     import random
@@ -71,9 +128,11 @@ def test_key_heap_1():
     tc.assertEqual(h.data, [97, 61, 65, 49, 51, 53, 62, 5, 38, 33])
 
 # (6 point)
+
+
 def test_key_heap_2():
     tc = TestCase()
-    h = Heap(lambda x:-x)
+    h = Heap(lambda x: -x)
 
     random.seed(0)
     for _ in range(10):
@@ -82,9 +141,11 @@ def test_key_heap_2():
     tc.assertEqual(h.data, [5, 33, 53, 38, 49, 65, 62, 97, 51, 61])
 
 # (6 points)
+
+
 def test_key_heap_3():
     tc = TestCase()
-    h = Heap(lambda s:len(s))
+    h = Heap(lambda s: len(s))
 
     h.add('hello')
     h.add('hi')
@@ -96,6 +157,8 @@ def test_key_heap_3():
                    ['supercalifragilisticexpialidocious', 'abracadabra', 'hello', 'hi', '0'])
 
 # (6 points)
+
+
 def test_key_heap_4():
     tc = TestCase()
     h = Heap()
@@ -111,9 +174,11 @@ def test_key_heap_4():
         tc.assertEqual(x, h.pop())
 
 # (6 points)
+
+
 def test_key_heap_5():
     tc = TestCase()
-    h = Heap(key=lambda x:abs(x))
+    h = Heap(key=lambda x: abs(x))
 
     random.seed(0)
     lst = list(range(-1000, 1000, 3))
@@ -122,37 +187,79 @@ def test_key_heap_5():
     for x in lst:
         h.add(x)
 
-    for x in reversed(sorted(range(-1000, 1000, 3), key=lambda x:abs(x))):
+    for x in reversed(sorted(range(-1000, 1000, 3), key=lambda x: abs(x))):
         tc.assertEqual(x, h.pop())
 
 ################################################################################
 # 2. MEDIAN
 ################################################################################
-def running_medians(iterable):
-    ### BEGIN SOLUTION
-    ### END SOLUTION
 
-################################################################################
-# TESTS
-################################################################################
+
+def running_medians(iterable):
+    # BEGIN SOLUTION
+    medians = []
+    lower = Heap()
+    higher = Heap(key=lambda x: -1*x)
+    for val in iterable:
+        if not higher and not lower:
+            lower.add(val)
+            medians.append(val)
+            continue
+        elif val < medians[-1]:
+            if len(lower) > len(higher):
+                higher.add(lower.pop())
+                lower.add(val)
+            elif len(lower) < len(higher):
+                lower.add(val)
+            else:
+                lower.add(val)
+        else:
+            if len(lower) < len(higher):
+                lower.add(higher.pop())
+                higher.add(val)
+            elif len(lower) > len(higher):
+                higher.add(val)
+            else:
+                higher.add(val)
+
+        if len(higher) == len(lower):
+            medians.append((higher.peek()+lower.peek())/2)
+        elif len(higher) > len(lower):
+            medians.append(higher.peek())
+        else:
+            medians.append(lower.peek())
+
+    return medians
+
+    # END SOLUTION
+
+    ################################################################################
+    # TESTS
+    ################################################################################
+
+
 def running_medians_naive(iterable):
     values = []
     medians = []
     for i, x in enumerate(iterable):
         values.append(x)
         values.sort()
-        if i%2 == 0:
+        if i % 2 == 0:
             medians.append(values[i//2])
         else:
             medians.append((values[i//2] + values[i//2+1]) / 2)
     return medians
 
 # (13 points)
+
+
 def test_median_1():
     tc = TestCase()
     tc.assertEqual([3, 2.0, 3, 6.0, 9], running_medians([3, 1, 9, 25, 12]))
 
 # (13 points)
+
+
 def test_median_2():
     tc = TestCase()
     vals = [random.randrange(10000) for _ in range(1000)]
@@ -160,10 +267,12 @@ def test_median_2():
 
 # MUST COMPLETE IN UNDER 10 seconds!
 # (14 points)
+
+
 def test_median_3():
     tc = TestCase()
     vals = [random.randrange(100000) for _ in range(100001)]
-    m_mid   = sorted(vals[:50001])[50001//2]
+    m_mid = sorted(vals[:50001])[50001//2]
     m_final = sorted(vals)[len(vals)//2]
     running = running_medians(vals)
     tc.assertEqual(m_mid, running[50000])
@@ -172,24 +281,46 @@ def test_median_3():
 ################################################################################
 # 3. TOP-K
 ################################################################################
-def topk(items, k, keyf):
-    ### BEGIN SOLUTION
-    ### END SOLUTION
 
-################################################################################
-# TESTS
-################################################################################
+
+def topk(items, k, keyf):
+    # BEGIN SOLUTION
+    topk = Heap(key=lambda x: keyf(x) * -1)
+    for item in items:
+        if not topk:
+            topk.add(item)
+        elif keyf(item) > keyf(topk.peek()) and len(topk) >= k:
+            topk.pop()
+            topk.add(item)
+        elif len(topk) < k:
+            topk.add(item)
+
+    answers = []
+    while topk:
+        answers.insert(0, topk.pop())
+
+    return answers
+    # END SOLUTION
+
+    ################################################################################
+    # TESTS
+    ################################################################################
+
+
 def get_age(s):
     return s[1]
 
-def naive_topk(l,k,keyf):
-    revkey = lambda x: keyf(x) * -1
+
+def naive_topk(l, k, keyf):
+    def revkey(x): return keyf(x) * -1
     return sorted(l, key=revkey)[0:k]
 
 # (30 points)
+
+
 def test_topk_students():
     tc = TestCase()
-    students = [ ('Peter', 33), ('Bob', 23), ('Alice', 21), ('Gertrud', 53) ]
+    students = [('Peter', 33), ('Bob', 23), ('Alice', 21), ('Gertrud', 53)]
 
     tc.assertEqual(naive_topk(students, 2, get_age),
                    topk(students, 2, get_age))
@@ -203,8 +334,11 @@ def test_topk_students():
 ################################################################################
 # TEST HELPERS
 ################################################################################
+
+
 def say_test(f):
     print(80 * "*" + "\n" + f.__name__)
+
 
 def say_success():
     print("SUCCESS")
@@ -212,6 +346,8 @@ def say_success():
 ################################################################################
 # MAIN
 ################################################################################
+
+
 def main():
     for t in [test_key_heap_1,
               test_key_heap_2,
@@ -226,6 +362,7 @@ def main():
         say_test(t)
         t()
         say_success()
+
 
 if __name__ == '__main__':
     main()
