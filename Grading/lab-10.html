@@ -10,64 +10,70 @@
       <li><b>test_ll_fix_simple</b>
       <ul>
       <li>Grade Percentage: 10</li>
-      <li>Your solution succeeded taking 0.091 sec</Li>
+      <li>Your solution succeeded taking 0.093 sec</Li>
       </ul>
       </li>
       <li><b>test_rr_fix_simple</b>
       <ul>
       <li>Grade Percentage: 10</li>
-      <li>Your solution succeeded taking 0.095 sec</Li>
+      <li>Your solution succeeded taking 0.091 sec</Li>
       </ul>
       </li>
       <li><b>test_lr_fix_simple</b>
       <ul>
       <li>Grade Percentage: 10</li>
-      <li>Your solution succeeded taking 0.092 sec</Li>
+      <li>Your solution succeeded taking 0.088 sec</Li>
       </ul>
       </li>
       <li><b>test_rl_fix_simple</b>
       <ul>
       <li>Grade Percentage: 10</li>
-      <li>Your solution succeeded taking 0.097 sec</Li>
+      <li>Your solution succeeded taking 0.087 sec</Li>
       </ul>
       </li>
       <li><b>test_key_order_after_ops</b>
       <ul>
       <li>Grade Percentage: 30</li>
-      <li>Your solution succeeded taking 0.156 sec</Li>
+      <li>Your solution succeeded taking 0.166 sec</Li>
       </ul>
       </li>
       <li><b>test_stress_testing</b>
       <ul>
       <li>Grade Percentage: 30</li>
-      <li>Your solution failed this test case! taking 4.447 sec</Li>
+      <li>Your solution failed this test case! taking 3.521 sec</Li>
 <li><pre>AssertionError: Tree is out of balance</pre></li>
 <li><pre>Traceback (most recent call last):
-  File "/Users/lord_pretzel/.pyenv/versions/3.7.4/lib/python3.7/site-packages/grader-0.0.1-py3.7.egg/grader/execution_base.py", line 63, in call_test_function
-    **pre_hook_info["extra_kwargs"]
-  File "/Users/lord_pretzel/.pyenv/versions/3.7.4/lib/python3.7/site-packages/grader-0.0.1-py3.7.egg/grader/core.py", line 48, in wrapper
+  File "/Users/lord_pretzel/.pyenv/versions/3.9.0/lib/python3.9/site-packages/grader-0.0.1-py3.9.egg/grader/execution_base.py", line 60, in call_test_function
+    test_function(
+  File "/Users/lord_pretzel/.pyenv/versions/3.9.0/lib/python3.9/site-packages/grader-0.0.1-py3.9.egg/grader/core.py", line 48, in wrapper
     result = test_function(module, *args, **kwargs)
-  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmpxt1lfjz1/lab10-test.py", line 123, in test_stress_testing
+  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmp06qwo6pw/lab10-test.py", line 123, in test_stress_testing
     traverse(t.root, check_balance)
-  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmpxt1lfjz1/lab10-test.py", line 17, in traverse
+  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmp06qwo6pw/lab10-test.py", line 17, in traverse
     traverse(t.left, fn)
-  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmpxt1lfjz1/lab10-test.py", line 18, in traverse
+  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmp06qwo6pw/lab10-test.py", line 18, in traverse
     traverse(t.right, fn)
-  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmpxt1lfjz1/lab10-test.py", line 18, in traverse
+  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmp06qwo6pw/lab10-test.py", line 18, in traverse
     traverse(t.right, fn)
-  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmpxt1lfjz1/lab10-test.py", line 18, in traverse
-    traverse(t.right, fn)
-  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmpxt1lfjz1/lab10-test.py", line 17, in traverse
+  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmp06qwo6pw/lab10-test.py", line 17, in traverse
     traverse(t.left, fn)
-  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmpxt1lfjz1/lab10-test.py", line 18, in traverse
+  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmp06qwo6pw/lab10-test.py", line 18, in traverse
     traverse(t.right, fn)
-  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmpxt1lfjz1/lab10-test.py", line 16, in traverse
+  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmp06qwo6pw/lab10-test.py", line 17, in traverse
+    traverse(t.left, fn)
+  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmp06qwo6pw/lab10-test.py", line 18, in traverse
+    traverse(t.right, fn)
+  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmp06qwo6pw/lab10-test.py", line 17, in traverse
+    traverse(t.left, fn)
+  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmp06qwo6pw/lab10-test.py", line 17, in traverse
+    traverse(t.left, fn)
+  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmp06qwo6pw/lab10-test.py", line 16, in traverse
     fn(t)
-  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmpxt1lfjz1/lab10-test.py", line 105, in check_balance
+  File "/var/folders/f7/xnz8v_b13td37s3k4w8t5j2h0000gn/T/tmp06qwo6pw/lab10-test.py", line 105, in check_balance
     assertLess(abs(height(t.left) - height(t.right)), 2, 'Tree is out of balance')
-  File "/Users/lord_pretzel/.pyenv/versions/3.7.4/lib/python3.7/site-packages/grader-0.0.1-py3.7.egg/grader/assertions.py", line 72, in assertLess
+  File "/Users/lord_pretzel/.pyenv/versions/3.9.0/lib/python3.9/site-packages/grader-0.0.1-py3.9.egg/grader/assertions.py", line 72, in assertLess
     assertTrue(got < expected, template)
-  File "/Users/lord_pretzel/.pyenv/versions/3.7.4/lib/python3.7/site-packages/grader-0.0.1-py3.7.egg/grader/assertions.py", line 80, in assertTrue
+  File "/Users/lord_pretzel/.pyenv/versions/3.9.0/lib/python3.9/site-packages/grader-0.0.1-py3.9.egg/grader/assertions.py", line 80, in assertTrue
     raise AssertionError(template)
 AssertionError: Tree is out of balance
 </pre></li>
